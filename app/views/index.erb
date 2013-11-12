@@ -9,10 +9,19 @@
   %>
   <% if @access_token %>
     <div>
-      <p>
+      <h2>Signed in as <%= @user.username %></h2>
+      <form id="tweet" action="/tweet" method="POST">
+        <input type="hidden" name="user_id" value="<%= @user.id %>"/>
+        <textarea name="tweet" maxlength="140" style="width:300px;height:100px"></textarea><br>
+        <input type="submit"/><br>
+      </form>
+<!--       <p>
         <strong>token:</strong> <%= @access_token.token %><br>
         <strong>secret:</strong> <%= @access_token.secret %><br>
-      </p>
+        <strong>secret:</strong> <%= @access_token.params[:user_id] %><br>
+        <strong>secret:</strong> <%= @access_token.params[:screen_name] %><br>
+
+      </p> -->
       <p>
         <button><a href="/sign_out">Sign Out</a></button>
       </p>
@@ -20,5 +29,5 @@
   <% else %>
     <button><a href="/sign_in">Sign In with Twitter</a></button>
   <% end %>
-  
+
 </div>

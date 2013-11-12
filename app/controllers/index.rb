@@ -20,6 +20,23 @@ get '/auth' do
 
   # at this point in the code is where you'll need to create your user account and store the access token
 
+  @user = User.find_by_username(@access_token.params[:screen_name])
+
+  if @user.nil?
+    @user = User.create(username: @access_token.params[:screen_name], oauth_token: @access_token.token, oauth_secret: @access_token.secret)
+  end
+
   erb :index
-  
+end
+
+post '/tweet' do
+  @user = User.find(params[:user_id])
+
+  twitter_client = Twitter::Client.new(:oauth_token => @user.oauth_token, :oauth_token_secret => @user.oauth_secret)
+  twitter_client.update(params[:tweet])
+
+  # user = Twitter::Client.new(
+  #   :oauth_token => @access_token.token,
+  #   :oauth_token_secret => @access_token.secret
+  # )
 end

@@ -1,7 +1,22 @@
 $(document).ready(function() {
-  // This is called after the document has loaded in its entirety
-  // This guarantees that any elements we bind to will exist on the page
-  // when we try to bind to them
 
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+  $("#tweet").submit(function(event){
+    event.preventDefault();
+    var form = this;
+    $.post("/tweet", $(form).serialize(), function(response){
+    });
+  });
+
+  $(document).ajaxStart(function () {
+      $("#tweet").children().attr("disabled", true);
+      $("#tweet").append("<p><img src=\"ajax-loader.gif\"/>Processing Tweet</p>");
+  }).ajaxStop(function () {
+      $("#tweet").children().attr("disabled", false);
+      $("#tweet textarea").val("");
+      $("#tweet p").replaceWith("<p style=\"color:green\">All Good!</p>");
+      $("#tweet p").fadeOut(1500, function(){
+        $(this).remove();
+      });
+  });
+
 });
