@@ -1,5 +1,5 @@
 get '/' do
-  erb :index
+  erb :landing
 end
 
 get '/sign_in' do
@@ -26,6 +26,11 @@ get '/auth' do
     @user = User.create(username: @access_token.params[:screen_name], oauth_token: @access_token.token, oauth_secret: @access_token.secret)
   end
 
+  redirect to("/tweet/#{@user.id}")
+end
+
+get '/tweet/:user_id' do
+  @user = User.find(params[:user_id])
   erb :index
 end
 
@@ -34,9 +39,4 @@ post '/tweet' do
 
   twitter_client = Twitter::Client.new(:oauth_token => @user.oauth_token, :oauth_token_secret => @user.oauth_secret)
   twitter_client.update(params[:tweet])
-
-  # user = Twitter::Client.new(
-  #   :oauth_token => @access_token.token,
-  #   :oauth_token_secret => @access_token.secret
-  # )
 end

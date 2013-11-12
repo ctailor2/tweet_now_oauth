@@ -9,7 +9,7 @@ $(document).ready(function() {
 
   $(document).ajaxStart(function () {
       $("#tweet").children().attr("disabled", true);
-      $("#tweet").append("<p><img src=\"ajax-loader.gif\"/>Processing Tweet</p>");
+      $("#tweet").append("<p><img src=/ajax-loader.gif/>Processing Tweet</p>");
   }).ajaxStop(function () {
       $("#tweet").children().attr("disabled", false);
       $("#tweet textarea").val("");
