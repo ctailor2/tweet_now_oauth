@@ -46,7 +46,7 @@ GEM
     tzinfo (0.3.35)
 
 PLATFORMS
-  ruby (1.9.3)
+  ruby
 
 DEPENDENCIES
   activerecord
